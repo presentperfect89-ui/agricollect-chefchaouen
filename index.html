@@ -47,14 +47,16 @@
         L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}').addTo(map);
 
         // --- CORRECTION PHOTO ---
-        function getDirectImgUrl(url) {
-            if (!url || url === "" || url === "undefined") return null;
-            let id = "";
-            if (url.includes("id=")) { id = url.split("id=")[1].split("&")[0]; }
-            else if (url.includes("/d/")) { id = url.split("/d/")[1].split("/")[0]; }
-            // Utilisation du lien de téléchargement direct forcé
-            return id ? "https://drive.google.com/uc?export=download&id=" + id : null;
-        }
+function getDirectImgUrl(url) {
+    if (!url || url === "" || url === "undefined") return null;
+    let id = "";
+    if (url.includes("id=")) { id = url.split("id=")[1].split("&")[0]; }
+    else if (url.includes("/d/")) { id = url.split("/d/")[1].split("/")[0]; }
+    
+    // Utilisation du lien "thumbnail" (miniature) avec une grande taille
+    // C'est le lien le plus stable pour contourner les blocages de navigateur
+    return id ? `https://lh3.googleusercontent.com/d/${id}=s800` : null;
+}
 
         async function init() {
             try {
@@ -118,3 +120,4 @@
     </script>
 </body>
 </html>
+
